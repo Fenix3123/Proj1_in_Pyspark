@@ -72,7 +72,6 @@ def checkuser(username, password):
   mycursor = db.cursor()
   mycursor.execute("select * from users where username ='{}' And password ='{}'".format(username, password))
   userline = mycursor.fetchall()
-  print(userline)
   if len(userline) == 0:
     return False
   else:
@@ -89,8 +88,6 @@ def getrole(username, password):
       return "user"
     elif i == "admin":
       return "admin"
-  
-print(getrole("Kev", "12"))
 
 if __name__ == "__main__":
   while True:
@@ -107,10 +104,14 @@ if __name__ == "__main__":
       username= input("username: ")
       password = input("Password: ")
       if(checkuser(username, password) == True and getrole(username, password) == "user"):
-        print("welcome "+username)
+        while True:
+          print("welcome user "+username)
+          print("what would you like to do")
+          print("1 to exit")
+          choice = input("Input here: ")
         exit()
       elif(checkuser(username, password) == True and getrole(username, password) == "admin"):
-        print("welcome admin"+username)
+        print("welcome admin "+username)
         exit()
       else:
         print("You can try again...")
