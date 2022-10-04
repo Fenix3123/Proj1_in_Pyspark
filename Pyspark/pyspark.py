@@ -67,6 +67,18 @@ def insertuser(name, username, password):
   sql = "INSERT INTO USERS (name, username, password, role) VALUES ('{}','{}','{}','user')".format(name, username, password)
   mycursor.execute(sql)
   db.commit()
+
+def deleteuser(username, password):
+  mycursor = db.cursor()
+  sql = "DELETE FROM USERS WHERE username = '{}' and password = '{}'".format(username, password)
+  mycursor.execute(sql)
+  db.commit()
+
+def deleteuseradmin(username):
+  mycursor = db.cursor()
+  sql = "DELETE FROM USERS WHERE username = '{}'".format(username)
+  mycursor.execute(sql)
+  db.commit()
   
 def checkuser(username, password):
   mycursor = db.cursor()
@@ -108,11 +120,49 @@ if __name__ == "__main__":
           print("welcome user "+username)
           print("what would you like to do")
           print("1 to exit")
-          choice = input("Input here: ")
-        exit()
+          print("2 to look at tables used")
+          print("3 find a specific movie")
+          print("4 find most populat movie")
+          print("5 find a movies based on genre")
+          print("6 find movies between years")
+          print("7 find movies based on genre count")
+          print("8 delete account")
+          choice = int(input("Input here: "))
+          if choice == 1:
+            quit()
+          elif choice == 2:
+            getTables()
+          elif choice == 3:
+            name = input("Name of the movie: ")
+            querySpecific(name)
+          elif choice == 4:
+            queryPopular()
+          elif choice == 5:
+            name = input("Genre to lookup?: ")
+            queryGenre(name)
+          elif choice == 6:
+            year1 = input("early year?: ")
+            year2 = input("later year?: ")
+            queryDate(year1, year2)
+          elif choice == 7:
+            queryCount()
+          elif choice == 8:
+            print("user deleted")
+            deleteuser(username, password)
+            quit()
+            
       elif(checkuser(username, password) == True and getrole(username, password) == "admin"):
-        print("welcome admin "+username)
-        exit()
+        while True:
+          print("welcome admin "+username)
+          print("1 delete a user based on username ")
+          print("2 logout")
+          choice = int(input("input here: "))
+          if choice == 1:
+            username = input("what is the username of the account to be deleted: ")
+            deleteuseradmin(username)
+          elif choice == 2:
+            quit()
+          
       else:
         print("You can try again...")
     elif(choice == "1"):
@@ -120,7 +170,7 @@ if __name__ == "__main__":
       username= input("what would u like ur username to be: ")
       password = input("Password?: ")
       insertuser(name, username, password)
-      exit()
+      print("user created")
     else:
       print("----------------")
       print("invalid choice")
