@@ -1,7 +1,5 @@
-from queue import Empty
 import findspark 
 import mysql.connector
-import os
 findspark.init()
 from pyspark.sql import SparkSession
 
@@ -158,8 +156,8 @@ if __name__ == "__main__":
           print("2 logout")
           choice = int(input("input here: "))
           if choice == 1:
-            username = input("what is the username of the account to be deleted: ")
-            deleteuseradmin(username)
+            name = input("what is the username of the account to be deleted: ")
+            deleteuseradmin(name)
           elif choice == 2:
             quit()
           
